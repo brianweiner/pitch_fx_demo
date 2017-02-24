@@ -13,7 +13,7 @@
 }
 
 .scatter-plot-container:first-of-type {
-  border-right: solid 1px;
+  border-right: solid 1px grey;
   padding-right: 1%;
 }
 
