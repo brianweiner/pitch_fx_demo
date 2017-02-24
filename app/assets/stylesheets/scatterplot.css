@@ -1,7 +1,9 @@
 .pitcher-comparison-container {
   display: flex;
   width: 80%;
-  padding: 10%;
+  padding-top: 3%;
+  padding-left: 10%;
+  padding-right: 10%;
 
   .pitch-scatter-plot {
     width: 50%;
@@ -19,4 +21,9 @@
 
 .scatter-plot-container:last-of-type {
   padding-left: 1%;
+}
+
+.pitcher-comparison-container h3 {
+  text-align: center;
+  width: inherit;
 }

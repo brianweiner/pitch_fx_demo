@@ -11,6 +11,7 @@ class PitchFxContainer extends React.Component {
     this.updateBallCount = this.updateBallCount.bind(this);
     this.updateStrikeCount = this.updateStrikeCount.bind(this);
     this.updateOutCount = this.updateOutCount.bind(this);
+    this.renderPitchComparison = this.renderPitchComparison.bind(this);
   }
 
   updateBallCount(ballCount) {
@@ -69,6 +70,19 @@ class PitchFxContainer extends React.Component {
     });
   }
 
+  renderPitchComparison() {
+    if (this.state.pitcherOneEvents.length != 0) {
+      return (
+        <div className="pitcher-comparison-container">
+          <PitchScatterPlot events={this.state.pitcherOneEvents} pitcherId={this.props.pitcherOne} pitcherName={this.props.pitcherOneName} />
+          <PitchScatterPlot events={this.state.pitcherTwoEvents} pitcherId={this.props.pitcherTwo} pitcherName={this.props.pitcherTwoName} />
+        </div>
+      );
+    }
+
+    return <div className="pitcher-comparison-container"><h3>To get started, click any of the Ball, Strike, or Out indicators</h3></div>;
+  }
+
   render () {
     return (
       <div>
@@ -80,10 +94,9 @@ class PitchFxContainer extends React.Component {
           updateStrikeCount={this.updateStrikeCount}
           updateOutCount={this.updateOutCount}
         />
-        <div className="pitcher-comparison-container">
-          <PitchScatterPlot events={this.state.pitcherOneEvents} pitcherId={this.props.pitcherOne} pitcherName={this.props.pitcherOneName} />
-          <PitchScatterPlot events={this.state.pitcherTwoEvents} pitcherId={this.props.pitcherTwo} pitcherName={this.props.pitcherTwoName} />
-        </div>
+        
+        { this.renderPitchComparison() }
+        
       </div>
     );
   }
