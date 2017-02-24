@@ -17,6 +17,8 @@
   -o-transition: background-color .5s ease-in-out;
   -ms-transition: background-color .5s ease-in-out;
   transition: background-color .5s ease-in-out;
+
+  margin-right: 2%;
 }
 
 .circle.green {
@@ -29,6 +31,10 @@
 
 .circle.yellow {
   background-color: #ffde66;
+}
+
+.circle:hover {
+  cursor: pointer;
 }
 
 .pitch-count-container {
@@ -53,4 +59,5 @@
 
 .ball-container span, .strike-container span, .out-container span {
   font-size: 0.8em;
+  cursor: pointer;
 }
