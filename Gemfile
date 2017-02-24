@@ -10,7 +10,9 @@ gem "pg",                       "~> 0.19.0"
 gem "rack-timeout",             "~> 0.4.2"
 gem "system-bang",              "~> 1.0.0"
 gem 'react-rails'
-gem 'material_design_lite-rails', '~> 1.3'
+gem 'jquery-rails'
+gem "highcharts-rails"
+gem 'lodash-rails'
 
 
 

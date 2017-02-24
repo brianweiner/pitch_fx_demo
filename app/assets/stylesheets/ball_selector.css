@@ -26,3 +26,22 @@
 .circle.red {
   background-color: #da1a1a;
 }
+
+.circle.yellow {
+  background-color: #ffde66;
+}
+
+.ball-container .legend, .strike-container .legend, .out-container .legend {
+  display: inline-block;
+  width: 60px;
+  padding-right: 5px;
+}
+
+.circle-container {
+  display: inline-block;
+  width: 100px;
+}
+
+.ball-container span, .strike-container span, .out-container span {
+  font-size: 0.8em;
+}

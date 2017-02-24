@@ -1,15 +1,15 @@
 class SituationTypeControl extends React.Component {
 
-  updateBatterHand(hand) {
-    this.props.updateBatterHand(hand);
-  }
-
   clearBalls() {
     this.props.updateBallCount(0);
   }
 
   clearStrikes() {
     this.props.updateStrikeCount(0);
+  }
+
+  clearOuts() {
+    this.props.updateOutCount(0);
   }
 
   renderBallSelectors() {
@@ -28,27 +28,40 @@ class SituationTypeControl extends React.Component {
     return selectors;
   }
 
+  renderOutSelectors() {
+    var selectors = [];
+    for (var i = 1; i <= 2; i++) {
+      selectors.push(<BallSelector key={i} current={this.props.outs} activeOn={i} updateFunc={this.props.updateOutCount} color="yellow" />);
+    }
+    return selectors;
+  }
+
   render () {
     return (
       <div>
-        <div className="ball-container">
-          <span>Balls: </span>
-          { this.renderBallSelectors() }
-          <span onClick={() => this.clearBalls()}>clear</span>
+        <div className="pitch-count-container">
+          <div className="ball-container">
+            <div className="legend">Balls: </div>
+            <div className="circle-container">
+              { this.renderBallSelectors() }
+            </div>
+            <span onClick={() => this.clearBalls()}>clear</span>
+          </div>
+          <div className="strike-container">
+            <div className="legend">Strikes: </div>
+            <div className="circle-container">
+              { this.renderStrikeSelectors() }
+            </div>
+            <span onClick={() => this.clearStrikes()}>clear</span>
+          </div>
+          <div className="out-container">
+            <div className="legend">Outs: </div>
+            <div className="circle-container">
+              { this.renderOutSelectors() }
+            </div>
+            <span onClick={() => this.clearOuts()}>clear</span>
+          </div>
         </div>
-        <div className="strike-container">
-          <span>Strikes: </span>
-          { this.renderStrikeSelectors() }
-          <span onClick={() => this.clearStrikes()}>clear</span>
-        </div>
-        <div className="batter-hand-container">
-          <span>Batter Side: </span>
-          <span onClick={() => this.updateBatterHand('R')}>R </span>
-          <span onClick={() => this.updateBatterHand('L')}>L </span>
-          <span onClick={() => this.updateBatterHand('any')}>any</span>    
-        </div>
-        <div>Inning: {this.props.inning}</div>
-        <div>Batter Hand: {this.props.batterHand}</div>
       </div>
     );
   }
@@ -57,9 +70,8 @@ class SituationTypeControl extends React.Component {
 SituationTypeControl.propTypes = {
   balls: React.PropTypes.number,
   strikes: React.PropTypes.number,
-  inning: React.PropTypes.string,
-  batterHand: React.PropTypes.string,
+  outs: React.PropTypes.number,
   updateBallCount: React.PropTypes.func,
-  updateBatterHand: React.PropTypes.func,
   updateStrikeCount: React.PropTypes.func,
+  updateOutCount: React.PropTypes.func,
 };

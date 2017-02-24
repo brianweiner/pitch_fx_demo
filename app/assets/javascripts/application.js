@@ -10,8 +10,13 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery
+//= require jquery_ujs
 //= require react
 //= require react_ujs
+//= require highcharts
+//= require highcharts/highcharts-more
+//= require highcharts/modules/heatmap
+//= require lodash
 //= require components
-//= require material
 //= require_tree .

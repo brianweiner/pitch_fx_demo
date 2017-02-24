@@ -46,39 +46,39 @@ end
 
 pitch_events = File.read(Rails.root.join('db', 'Pitchfx.csv'))
 csv = CSV.parse(pitch_events, :headers => true, :encoding => 'ISO-8859-1')
+ActiveRecord::Base.transaction do
+  csv.each do |row|
+    hash = row.to_hash
+    pitcher = Pitcher.find_by(id: hash['pitcher_id'])
+    season = Season.find_by(year: hash['year'].to_i, pitcher: pitcher)
 
-csv.each do |row|
-  hash = row.to_hash
-  pp hash['year']
-  pitcher = Pitcher.find_by(id: hash['pitcher_id'])
-  season = Season.find_by(year: hash['year'].to_i, pitcher: pitcher)
-
-  PitchEvent.find_or_initialize_by(sv_pitch_id: hash['sv_pitch_id']) do |event|
-    event.game_id = hash['game_id']
-    event.season_id = season.id
-    event.game_date = hash['game_date']
-    event.year = hash['year']
-    event.at_bat_number = hash['at_bat_number']
-    event.pitch_number = hash['pitch_number']
-    event.inning = hash['inning']
-    event.top_inning_sw = hash['top_inning_sw']
-    event.event_type = hash['event_type']
-    event.event_result = hash['event_result']
-    event.pre_balls = hash['pre_balls']
-    event.pre_strikes = hash['pre_strikes']
-    event.pre_outs = hash['pre_outs']
-    event.batter_id = hash['batter_id']
-    event.bat_side = hash['bat_side']
-    event.pitcher_id = pitcher.id
-    event.throws = hash['throws']
-    event.initial_speed = hash['initial_speed']
-    event.pitch_type = hash['pitch_type']
-    event.break_x = hash['break_x']
-    event.break_z = hash['break_z']
-    event.plate_x = hash['plate_x']
-    event.plate_z = hash['plate_z']
-    event.hit_trajectory = hash['HitTrajectory']
-    event.save!
+    PitchEvent.find_or_initialize_by(sv_pitch_id: hash['sv_pitch_id']) do |event|
+      event.game_id = hash['game_id']
+      event.season_id = season.id
+      event.game_date = hash['game_date']
+      event.year = hash['year']
+      event.at_bat_number = hash['at_bat_number']
+      event.pitch_number = hash['pitch_number']
+      event.inning = hash['inning']
+      event.top_inning_sw = hash['top_inning_sw']
+      event.event_type = hash['event_type']
+      event.event_result = hash['event_result']
+      event.pre_balls = hash['pre_balls']
+      event.pre_strikes = hash['pre_strikes']
+      event.pre_outs = hash['pre_outs']
+      event.batter_id = hash['batter_id']
+      event.bat_side = hash['bat_side']
+      event.pitcher_id = pitcher.id
+      event.throws = hash['throws']
+      event.initial_speed = hash['initial_speed']
+      event.pitch_type = hash['pitch_type']
+      event.break_x = hash['break_x']
+      event.break_z = hash['break_z']
+      event.plate_x = hash['plate_x']
+      event.plate_z = hash['plate_z']
+      event.hit_trajectory = hash['HitTrajectory']
+      event.save!
+    end
   end
 end
 

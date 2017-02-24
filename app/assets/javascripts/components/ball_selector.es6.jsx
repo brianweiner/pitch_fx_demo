@@ -8,7 +8,6 @@ class BallSelector extends React.Component {
     const className = this.props.current >= this.props.activeOn ? `circle ${this.props.color}` : "circle"
     return (
       <div className={className} onClick={() => this.updateFunc()}>
-        
       </div>
     );
   }

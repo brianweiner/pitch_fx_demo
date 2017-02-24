@@ -1,0 +1,13 @@
+.pitcher-comparison-container {
+  display: flex;
+  width: 80%;
+  padding: 10%;
+
+  .pitch-scatter-plot {
+    width: 50%;
+  }
+}
+
+.scatter-plot-container {
+  width: inherit;
+}
