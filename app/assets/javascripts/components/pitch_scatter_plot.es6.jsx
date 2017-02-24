@@ -70,6 +70,67 @@ class PitchScatterPlot extends React.Component {
   }
 
   drawChart() {
+    const chartId = `scatterplot-container-${this.props.pitcherId}`;
+    const chartTitle = `Pitch Location for ${this.props.pitcherName}`;
+    Highcharts.chart(chartId, {
+      chart: {
+          type: 'scatter',
+          zoomType: 'xy',
+          plotAreaWidth: 150,
+          plotAreaHeight: 200
+      },
+      title: {
+          text: chartTitle
+      },
+      subtitle: {
+          text: 'Source: Pitch F/X'
+      },
+      xAxis: {
+          title: {
+              enabled: true,
+              text: 'Position from catcher perspective'
+          },
+          showLastLabel: true,
+          min: -6,
+          max: 6,
+
+      },
+      yAxis: {
+          title: {
+              text: 'Height from bottom of plate'
+          },
+          min: -5,
+          max: 10,
+      },
+      plotOptions: {
+        scatter: {
+          marker: {
+            radius: 2,
+            states: {
+              hover: {
+                enabled: true,
+                lineColor: 'rgb(100,100,100)'
+              }
+            }
+          },
+        states: {
+          hover: {
+            marker: {
+              enabled: false
+            }
+          }
+        },
+        tooltip: {
+          headerFormat: '<b>{series.name}</b><br>',
+          pointFormat: '{point.x} cm, {point.y} kg'
+        }
+      }
+      },
+      series: this.state.currentPitches
+    });
+  }
+
+  componentWillMount() {
     (function(H) {
       H.wrap(H.Chart.prototype, 'setChartSize', function(proceed, skipAxes) {
         var chart = this,
@@ -142,69 +203,8 @@ class PitchScatterPlot extends React.Component {
         }
       });
     }(Highcharts));
-
-    const chartId = `scatterplot-container-${this.props.pitcherId}`;
-    const chartTitle = `Pitch Location for ${this.props.pitcherName}`;
-    Highcharts.chart(chartId, {
-      chart: {
-          type: 'scatter',
-          zoomType: 'xy',
-          plotAreaWidth: 150,
-          plotAreaHeight: 200
-      },
-      title: {
-          text: chartTitle
-      },
-      subtitle: {
-          text: 'Source: Pitch F/X'
-      },
-      xAxis: {
-          title: {
-              enabled: true,
-              text: 'Position from catcher perspective'
-          },
-          showLastLabel: true,
-          min: -6,
-          max: 6,
-
-      },
-      yAxis: {
-          title: {
-              text: 'Height from bottom of plate'
-          },
-          min: -5,
-          max: 10,
-      },
-      plotOptions: {
-        scatter: {
-          marker: {
-            radius: 2,
-            states: {
-              hover: {
-                enabled: true,
-                lineColor: 'rgb(100,100,100)'
-              }
-            }
-          },
-        states: {
-          hover: {
-            marker: {
-              enabled: false
-            }
-          }
-        },
-        tooltip: {
-          headerFormat: '<b>{series.name}</b><br>',
-          pointFormat: '{point.x} cm, {point.y} kg'
-        }
-      }
-      },
-      series: this.state.currentPitches
-    });
   }
-
   componentWillReceiveProps(nextProps) {
-    if (nextProps === this.props) { return; }
     const activePitches = this.convertPitches(nextProps);
     const pitchChoices = this.convertPitchChoices(nextProps);
 
@@ -213,9 +213,13 @@ class PitchScatterPlot extends React.Component {
       currentPitches: activePitches,
       pitchChoices: pitchChoices,
       totalPitches: nextProps.events.length,
-    }, this.drawChart());
+    });
   }
-  
+
+  componentDidUpdate(prevProps, prevState) {
+    this.drawChart();
+  }
+
   render () {
     return (
       <div className="scatter-plot-container">
