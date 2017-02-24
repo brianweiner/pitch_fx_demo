@@ -31,6 +31,15 @@
   background-color: #ffde66;
 }
 
+.pitch-count-container {
+  display: flex;
+  padding-left: 10%;
+}
+
+.ball-container, .strike-container, .out-container {
+  width: 33%;
+}
+
 .ball-container .legend, .strike-container .legend, .out-container .legend {
   display: inline-block;
   width: 60px;

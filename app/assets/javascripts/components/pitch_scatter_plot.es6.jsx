@@ -1,8 +1,33 @@
+const PITCH_TYPE_CONVERTER = {
+  FA: 'Fastball',
+  FF: 'Four-Seam Fastball',
+  FT: 'Two-seam Fastball',
+  SI: 'Sinker',
+  SL: 'Slider',
+  FS: 'Splitter',
+  FC: 'Cutter',
+  FO: 'Pitch Out',
+  PO: 'Pitch Out',
+  IN: 'Intentional Ball',
+  CU: 'Curveball',
+  CB: 'Curveball',
+  KC: 'Knuckle-curve',
+  EP: 'Eephus',
+  CH: 'Changeup',
+  SC: 'Screwball',
+  KN: 'Knuckleball',
+  AB: 'Auto. Ball',
+  UN: 'Unidentified',
+  XX: 'Unidentified',
+};
+
 class PitchScatterPlot extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentPitches: [],
+      pitchChoices: {},
+      totalPitches: 0,
     };
   }
 
@@ -24,12 +49,24 @@ class PitchScatterPlot extends React.Component {
     var groupedPitches = []
     _.forOwn(pitchTypesAndLocationsOnly, (val,key) => {
       groupedPitches.push({
-        name: key,
+        name: PITCH_TYPE_CONVERTER[key],
         data: val,
       });
     });
 
     return groupedPitches;
+  }
+
+  convertPitchChoices(nextProps) {
+    const groupedByPitchType = _.groupBy(nextProps.events, (val) => { return val.pitchType });
+    const pitchCounts = [];
+    _.forOwn(groupedByPitchType, (val, key) =>{
+      pitchCounts.push({
+        name: PITCH_TYPE_CONVERTER[key],
+        y: val.length,
+      });
+    });
+    return pitchCounts;
   }
 
   drawChart() {
@@ -168,16 +205,22 @@ class PitchScatterPlot extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps === this.props) { return; }
+    const activePitches = this.convertPitches(nextProps);
+    const pitchChoices = this.convertPitchChoices(nextProps);
 
     this.setState({
       ...this.state,
-      currentPitches: this.convertPitches(nextProps)
+      currentPitches: activePitches,
+      pitchChoices: pitchChoices,
+      totalPitches: nextProps.events.length,
     }, this.drawChart());
   }
+  
   render () {
     return (
       <div className="scatter-plot-container">
         <div className="pitch-scatter-plot" id={`scatterplot-container-${this.props.pitcherId}`}></div>
+        <PitchSelectionChart pitches={this.state.pitchChoices} pitcherId={this.props.pitcherId} />
       </div>
     );
   }

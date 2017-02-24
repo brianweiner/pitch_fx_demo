@@ -11,3 +11,12 @@
 .scatter-plot-container {
   width: inherit;
 }
+
+.scatter-plot-container:first-of-type {
+  border-right: solid 1px;
+  padding-right: 1%;
+}
+
+.scatter-plot-container:last-of-type {
+  padding-left: 1%;
+}
