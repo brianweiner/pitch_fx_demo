@@ -22,6 +22,8 @@ The App loads initially in a blank state. To select a batter situation click the
 
 Each indicator can be cleared by clicking 'clear' to the respective section's right.
 
+A live demo can be found at http://pure-shore-4802.herokuapp.com/
+
 ## Room for improvement
 Normally I would build the ReactJS components outside the Rails pipeline and stick to an independent Babel / Webpack process. In this case I was curious about how the Rails pipeline was working with webpack these days, and time constraints didn't allow for a more complex pipeline.
 As far as Rails with Webpack:
