@@ -29,6 +29,7 @@ class PitchScatterPlot extends React.Component {
       pitchChoices: {},
       totalPitches: 0,
     };
+    this.drawChart = this.drawChart.bind(this);
   }
 
   convertPitches(nextProps) {
@@ -72,7 +73,7 @@ class PitchScatterPlot extends React.Component {
   drawChart() {
     const chartId = `scatterplot-container-${this.props.pitcherId}`;
     const chartTitle = `Pitch Location for ${this.props.pitcherName}`;
-    Highcharts.chart(chartId, {
+    this.chart = Highcharts.chart(chartId, {
       chart: {
           type: 'scatter',
           zoomType: 'xy',
@@ -91,16 +92,18 @@ class PitchScatterPlot extends React.Component {
               text: 'Position from catcher perspective'
           },
           showLastLabel: true,
-          min: -6,
-          max: 6,
+          min: -5,
+          max: 5,
+          tickInterval: 0.25,
 
       },
       yAxis: {
           title: {
               text: 'Height from bottom of plate'
           },
-          min: -5,
-          max: 10,
+          min: -4,
+          max: 8,
+          tickInterval: 0.25,
       },
       plotOptions: {
         scatter: {
@@ -122,7 +125,7 @@ class PitchScatterPlot extends React.Component {
         },
         tooltip: {
           headerFormat: '<b>{series.name}</b><br>',
-          pointFormat: '{point.x} cm, {point.y} kg'
+          pointFormat: '{point.x}in, {point.y}in'
         }
       }
       },

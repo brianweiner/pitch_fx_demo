@@ -1,9 +1,14 @@
 class PitchSelectionChart extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.drawChart = this.drawChart.bind(this);
+  }
 
   drawChart() {
     const chartName = `pie-chart-container-${this.props.pitcherId}`;
    
-    Highcharts.chart(chartName, {
+    this.chart = Highcharts.chart(chartName, {
       chart: {
           plotBackgroundColor: null,
           plotBorderWidth: null,
@@ -38,7 +43,7 @@ class PitchSelectionChart extends React.Component {
   }
 
   componentDidUpdate() {
-    this.drawChart()
+    this.drawChart();
   }
 
   render () {
